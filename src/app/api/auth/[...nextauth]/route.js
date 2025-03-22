@@ -76,13 +76,18 @@ export const authOptions = {
       return token;
     },
 
-    async session({ session, token }) {
-      if (token) {
-        session.user._id = token._id;
-        session.user.accessToken = token.accessToken;
-      }
-      return session;
-    },
+    async session({ session, user, token }) {
+  if (token) {
+    session.user._id = token._id;
+    session.user.accessToken = token.accessToken;
+  } else {
+    const dbUser = await User.findOne({ email: session.user.email });
+    session.user._id = dbUser._id;
+    session.user.avatar = dbUser.avatar;
+  }
+  return session;
+}
+
   },
 
   pages: {

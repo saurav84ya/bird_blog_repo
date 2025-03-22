@@ -7,7 +7,7 @@ const nextConfig = {
           hostname: "avatars.githubusercontent.com",
         },
       ],
-      domains: ["lh3.googleusercontent.com"],
+      domains: ["lh3.googleusercontent.com" , "res.cloudinary.com","www.flaticon.com"],
     },
   };
 export default nextConfig;
