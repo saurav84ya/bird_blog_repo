@@ -15,6 +15,7 @@ export default async function page() {
   return (
     <div className='h-[calc(100dvh-8rem)] flex items-center justify-center' >
       <LoginForm/>
+      
     </div>
   )
 }

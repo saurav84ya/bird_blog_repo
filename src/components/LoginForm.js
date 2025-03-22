@@ -5,6 +5,7 @@ import Link from "next/link";
 import toast from "react-hot-toast";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 
 const initialState = {
   email: "",
@@ -40,7 +41,7 @@ export default function LoginForm() {
       return;
     }
 
- 
+
     try {
       setIsLoading(true);
 
@@ -106,7 +107,21 @@ export default function LoginForm() {
           >
             {isLoading ? "Loading..." : "Login"}
           </button>
+
         </form>
+
+        <div className="flex flex-col gap-4 mt-10">
+  {/* GitHub Button */}
+
+
+  {/* Google Button */}
+  <button
+    onClick={() => signIn("google")}
+    className="flex items-center justify-center gap-2 bg-white hover:bg-gray-200 text-gray-900 font-semibold py-2 rounded-md transition duration-300 shadow-md w-full border border-gray-300"
+  >
+    <FaGoogle className="text-red-500 text-xl" /> Sign in with Google
+  </button>
+</div>
 
         {/* Signup Link */}
         <p className="text-center text-sm mt-4">

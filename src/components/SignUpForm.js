@@ -2,8 +2,10 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation"; // Import useRouter
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { signIn } from "next-auth/react"; // ✅ Fixed Import
+import { FaGithub, FaGoogle } from "react-icons/fa";
 
 export default function SignUpForm() {
   const initialState = {
@@ -14,7 +16,7 @@ export default function SignUpForm() {
 
   const [state, setState] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter(); // Define router
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,13 +50,12 @@ export default function SignUpForm() {
         method: "POST",
         body: JSON.stringify(newUser),
       });
-      
-      const data = await response.json();  // Extract JSON response
-      
-      // console.log("Response Status:", response.status);
-      // console.log("Response Data:", data);
 
-      if (data?.succes) {
+      const data = await response.json();
+
+      // console.log("data",data)
+
+      if (data?.success) {
         toast.success(data?.message);
         setTimeout(() => {
           router.push("/login");
@@ -126,8 +127,23 @@ export default function SignUpForm() {
           >
             {isLoading ? "Loading..." : "Sign Up"}
           </button>
-        </form>
 
+          {/* GitHub Sign Up Button */}
+          
+        </form>
+       
+<div className="flex flex-col gap-4 mt-6">
+  {/* GitHub Button */}
+ 
+
+  {/* Google Button */}
+  <button
+    onClick={() => signIn("google")}
+    className="flex items-center justify-center gap-2 bg-white hover:bg-gray-200 text-gray-900 font-semibold py-2 rounded-md transition duration-300 shadow-md w-full border border-gray-300"
+  >
+    <FaGoogle className="text-red-500 text-xl" /> Sign Up with Google
+  </button>
+</div>
         {/* Already a user */}
         <p className="text-center text-sm mt-4">
           Already a user? <Link href="/login" className="text-orange-400 hover:underline">Login</Link>
