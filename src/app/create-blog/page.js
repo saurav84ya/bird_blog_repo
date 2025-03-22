@@ -25,7 +25,7 @@ const CreateBlog = () => {
 
   const { data: session, status } = useSession();
 
-  console.log("session",session.user._id)
+  // console.log("session",session?.user._id)
 
    if(!session) redirect ("/login")
 
