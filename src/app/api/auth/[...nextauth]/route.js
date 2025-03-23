@@ -76,17 +76,25 @@ export const authOptions = {
       return token;
     },
 
+
+
     async session({ session, user, token }) {
   if (token) {
+    const dbUser = await User.findOne({ email: session.user.email });
+    console.log("hiii")
     session.user._id = token._id;
-    session.user.accessToken = token.accessToken;
+    session.user.id = dbUser._id || "dfvvfvsf";
   } else {
+    console.log("hiii2")
+
     const dbUser = await User.findOne({ email: session.user.email });
     session.user._id = dbUser._id;
     session.user.avatar = dbUser.avatar;
   }
   return session;
 }
+
+
 
   },
 

@@ -9,7 +9,7 @@ const OtherBlogs = ({ otherBlogs,demoImage }) => {
   const time = moment(timeStr);
   const formattedTime = time.format("MMMM Do YYYY");
 
-  console.log("otherBlogs",otherBlogs)
+  // console.log("otherBlogs",otherBlogs)
 
   return (
     <section>

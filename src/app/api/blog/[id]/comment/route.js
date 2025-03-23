@@ -6,15 +6,15 @@ import { verifyJwtToken } from "@/lib/jwt";
 import Blog from "@/models/Blog";
 import User from "@/models/User";
 
-export async function POST(req, res) {
+export async function POST(req, {params}) {
   await connect();
-  const id = res.params.id;
+  const {id} =  await params;
   const accessToken = req.headers.get("authorization");
-  const token = accessToken.split(" ")[1];
+  const autherId = accessToken.split(" ")[1];
 
-  const decodedToken = verifyJwtToken(token);
+  // const decodedToken = verifyJwtToken(token);
 
-  if (!accessToken || !decodedToken) {
+  if (!autherId) {
     return new Response(
       JSON.stringify({ error: "unauthorized (wrong or expired token" }),
       { status: 403 }
@@ -24,7 +24,7 @@ export async function POST(req, res) {
   try {
     const body = await req.json();
     const blog = await Blog.findById(id);
-    const user = await User.findById(decodedToken._id);
+    const user = await User.findById(autherId);
 
     const newComment = {
         text: body.text,

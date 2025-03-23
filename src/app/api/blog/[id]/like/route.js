@@ -4,17 +4,18 @@ import { connect } from "@/lib/db";
 import { NextResponse } from "next/server";
 import { verifyJwtToken } from "@/lib/jwt";
 import Blog from "@/models/Blog";
+import User from "@/models/User";
 
-export async function PUT(req, res) {
+export async function PUT(req, {params}) {
   await connect();
 
-  const id = res.params.id;
+  const {id} = await params;
   const accessToken = req.headers.get("authorization");
-  const token = accessToken.split(" ")[1];
+  const userIdWhoLiked = accessToken.split(" ")[1];
 
-  const decodedToken = verifyJwtToken(token);
+  // console.log("emailOfUserWhoLIkes",emailOfUserWhoLIkes , id)
 
-  if (!accessToken || !decodedToken) {
+  if (!userIdWhoLiked) {
     return NextResponse.json(
       { error: "unauthorized (wrong or expired token)" },
       { status: 403 }
@@ -23,11 +24,14 @@ export async function PUT(req, res) {
 
   try {
     const blog = await Blog.findById(id);
+    // const userWhoLiked = await  User.findOne({email : emailOfUserWhoLIkes})
 
-    if(blog.likes.includes(decodedToken._id)) {
-        blog.likes = blog.likes.filter(id => id.toString() !== decodedToken._id.toString());
+    // console.log("userWhoLiked" , blog)
+
+    if(blog.likes.includes(userIdWhoLiked)) {
+        blog.likes = blog.likes.filter(id => id.toString() !== userIdWhoLiked.toString());
     } else {
-        blog.likes.push(decodedToken._id)
+        blog.likes.push(userIdWhoLiked)
     }
 
     await blog.save();
@@ -35,6 +39,7 @@ export async function PUT(req, res) {
 
     return NextResponse.json(blog, { status: 200 });
   } catch (error) {
+    console.log("err",error)
     return NextResponse.json({ message: "PUT error" }, {status: 500});
   }
 }

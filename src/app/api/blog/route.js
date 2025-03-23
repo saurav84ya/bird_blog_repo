@@ -24,7 +24,7 @@ export async function POST(req) {
   try {
     const body = await req.json();
 
-    console.log("body",body.authorEmail)
+    // console.log("body",body.authorEmail)
 
     const autherEMAIL = body?.authorEmail
 
@@ -60,7 +60,7 @@ export async function GET(req) {
       .populate({
         path: "authorId",
         select: "-password",
-      })
+      })    
       .sort({ createdAt: -1 });
 
       return NextResponse.json({blogs , message : "fetched succesfully" , success : true });
