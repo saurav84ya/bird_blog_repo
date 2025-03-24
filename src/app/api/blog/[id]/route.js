@@ -5,45 +5,45 @@ import { NextResponse } from "next/server";
 import { verifyJwtToken } from "@/lib/jwt";
 import Blog from "@/models/Blog";
 
-// export async function PUT(req, res) {
-//   await connect();
+export async function PUT(req, {params}) {
+  await connect();
 
-//   const id = res.params.id;
+  const {id} =  await params;
 
-//   const accessToken = req.headers.get("authorization");
-//   const token = accessToken.split(" ")[1];
+  const accessToken = req.headers.get("authorization");
+  const autherId = accessToken.split(" ")[1];
 
-//   const decodedToken = verifyJwtToken(token);
+  // const decodedToken = verifyJwtToken(token);
 
-//   if (!accessToken || !decodedToken) {
-//     return NextResponse.json(
-//       { error: "unauthorized (wrong or expired token)" },
-//       { status: 403 }
-//     );
-//   }
+  if (!autherId) {
+    return NextResponse.json(
+      { error: "unauthorized (wrong or expired token)" },
+      { status: 403 }
+    );
+  }
 
-//   try {
-//     const body = await req.json();
-//     const blog = await Blog.findById(id).populate("authorId");
+  try {
+    const body = await req.json();
+    const blog = await Blog.findById(id).populate("authorId");
 
-//     if (blog?.authorId?._id.toString() !== decodedToken._id.toString()) {
-//       return NextResponse.json(
-//         { msg: "Only author can update his/her blog" },
-//         { status: 403 }
-//       );
-//     }
+    if (blog?.authorId?._id.toString() !== autherId.toString()) {
+      return NextResponse.json(
+        { msg: "Only author can update his/her blog" },
+        { status: 403 }
+      );
+    }
 
-//     const updateBlog = await Blog.findByIdAndUpdate(
-//       id,
-//       { $set: { ...body } },
-//       { new: true }
-//     );
+    const updateBlog = await Blog.findByIdAndUpdate(
+      id,
+      { $set: { ...body } },
+      { new: true }
+    );
 
-//     return NextResponse.json(updateBlog, { status: 200 });
-//   } catch (error) {
-//     return NextResponse.json({ message: "PUT error" }, {status: 500});
-//   }
-// }
+    return NextResponse.json(updateBlog, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ message: "PUT error" }, {status: 500});
+  }
+}
 
 export async function DELETE(req, {params}) {
     await connect();
