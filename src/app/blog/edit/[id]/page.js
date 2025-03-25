@@ -208,7 +208,7 @@ console.log(state)
   };
 
   return (
-    <section className="container max-w-3xl">
+    <div className="container w-[1000px] mx-auto ">
       <h2 className="mb-5">
         <span className="special-word">Edit</span> Blog
       </h2>
@@ -315,7 +315,7 @@ console.log(state)
           {isLoading ? "Loading..." : "Edit"}
         </button>
       </form>
-    </section>
+    </div>
   );
 };
 

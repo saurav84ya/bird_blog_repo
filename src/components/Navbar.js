@@ -71,7 +71,7 @@ export default function Navbar() {
                             {dropDown && (
                                 <ul className='absolute top-12 right-0 bg-white shadow-lg rounded-lg py-2 px-4 w-40'>
                                     <li className='flex justify-between items-center border-b pb-2'>
-                                        <Link href={'/profile'} className='text-gray-800 font-medium hover:font-bold'>Profile</Link>
+                                        <Link href={'/profile'} onClick={ ()=> setDropDown(false)}  className='text-gray-800 font-medium hover:font-bold'>Profile</Link>
                                         <button onClick={() => setDropDown(false)} className="text-red-500">
                                             <IoMdCloseCircle size={20} />
                                         </button>
