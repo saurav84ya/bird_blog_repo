@@ -270,8 +270,17 @@ const ProfilePage = () => {
         {/* Avatar */}
         <div className="w-32 h-32 rounded-full bg-gray-300 flex items-center justify-center">
           {
-            formData.avatar ?   <Image src={formData.avatar} alt='profile' width={155} height={155}
-            className='rounded-full' />  :<span className="text-4xl">👤</span>
+            formData.avatar ?  <Image 
+            src={formData.avatar || '/default-avatar.png'} 
+            alt="profile" 
+            width={155} 
+            height={155}
+            className="rounded-full aspect-square"
+            style={{
+              width: '155px',
+              height: '135px'
+            }}
+          />  :<span className="text-4xl">👤</span>
           }
         </div>
         
@@ -292,10 +301,19 @@ const ProfilePage = () => {
           {/* Edit Profile Button */}
           <button 
             onClick={() => setIsEditModalOpen(true)}
+
             className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
           >
             Edit Profile
           </button>
+
+          <Link href={'/profile/editProfilePic'} >
+          <button 
+            className="mt-4 ml-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition"
+          >
+            Edit Pic
+          </button>
+          </Link>
         </div>
       </div>
 

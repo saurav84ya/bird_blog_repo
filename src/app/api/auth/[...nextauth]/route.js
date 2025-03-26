@@ -83,6 +83,7 @@ export const authOptions = {
     const dbUser = await User.findOne({ email: session.user.email });
     session.user._id = token._id;
     session.user.id = dbUser._id || "dfvvfvsf";
+    session.user.image = dbUser.avatar;
   } else {
 
     const dbUser = await User.findOne({ email: session.user.email });

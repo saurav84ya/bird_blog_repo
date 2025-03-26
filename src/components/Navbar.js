@@ -53,11 +53,15 @@ export default function Navbar() {
 >
     {session?.user?.image ? (
         <Image
-            src={session.user.image} 
+            src={session?.user?.image || "sdfcwsd"} 
             alt='profile'
             width={40}
+            className='rounded-full  aspect-square'
             height={40}
-            className='rounded-full w-10 h-10'
+            style={{
+                width: '40px',
+                height: '30px'
+              }}
         />
     ) : (
         <div className="w-10 h-10 flex items-center justify-center bg-gray-700 rounded-full text-xl font-bold special-word ">
