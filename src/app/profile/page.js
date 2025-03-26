@@ -414,7 +414,7 @@ const ProfilePage = () => {
 
       {/* User Blogs Section */}
       <div className="mb-8">
-       <DeletAllBlogs deleteShow={deleteShow} setDeletShow={setDeletShow}  />
+       <DeletAllBlogs deleteShow={deleteShow} deletAllBlogs={deletAllBlogs} setDeletShow={setDeletShow}  />
         
         {/* Blog List */}
         <div className="space-y-4">
@@ -427,12 +427,18 @@ const ProfilePage = () => {
   {blogList?.length > 0 ? (
     <div className='overflow-y-auto p-5  h-[500px] '>
       {blogList.map((blog, i) => (
+       
         <div key={i} className="border p-4 mt-4 rounded-lg hover:shadow-md transition">
+
+<Link href={`/blog/${blog._id}`}  className="relative block">
           <h3 className="font-semibold text-lg">{blog.title || 'Blog Post Title'}</h3>
           <p className="text-gray-600 text-sm mb-2">
             Published on: {showData(blog.createdAt)}
           </p>
           <p className="text-gray-700">{blog.description}</p>
+
+        </Link>
+
           <div className="flex gap-2 mt-3">
             <Link href={`/blog/edit/${blog._id}`}>
               <button className="text-sm text-blue-500 hover:underline">Edit</button>

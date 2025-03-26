@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 
-export default function DeletAllBlogs({deleteShow , setDeletShow}) {
+export default function DeletAllBlogs({deleteShow ,deletAllBlogs, setDeletShow}) {
 
 
     
@@ -41,7 +41,7 @@ export default function DeletAllBlogs({deleteShow , setDeletShow}) {
   return (
     <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">Your Recent Blogs</h2>
-          <button onClick={() =>startTimer() }  className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition">
+          <button onClick={deletAllBlogs }  className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition">
             Delete All Blogs
           </button>
         </div>

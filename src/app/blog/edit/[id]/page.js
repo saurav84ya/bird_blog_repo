@@ -27,7 +27,7 @@ const EditBlog = ({ params }) => {
   const [state, setState] = useState(initialState);
 
   const [isLoading, setIsLoading] = useState(false);
-console.log(state)
+// console.log(state)
   const router = useRouter();
   const { data: session, status } = useSession();
 
@@ -191,7 +191,7 @@ console.log(state)
 
       const data = await res.json();
 
-      console.log("data",data)
+      // console.log("data",data)
       const image = {
         id: data["public_id"],
         url: data["secure_url"],

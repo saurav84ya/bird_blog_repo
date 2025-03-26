@@ -210,7 +210,7 @@ const BlogPage = () => {
         }
       );
 
-      console.log("response", response)
+      // console.log("response", response)
 
       if (response?.status === 200) {
         fetchBlog();
