@@ -1,23 +1,33 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
+
+const MONGO_URI = process.env.MONGODB_URL;
 
 export async function connect() {
+  if (!MONGO_URI) {
+    console.error("❌ MongoDB connection string is missing!");
+    process.exit(1);
+  }
+
   try {
-    await mongoose.connect(process.env.MONGODB_URL); // Added await
+    if (mongoose.connection.readyState >= 1) {
+      console.log("⚡ Using existing MongoDB connection");
+      return;
+    }
+
+    await mongoose.connect(MONGO_URI, {
+      serverSelectionTimeoutMS: 30000, // ⬅ Increase timeout (default is 10000ms)
+      connectTimeoutMS: 30000, // ⬅ Connection timeout
+    });
+
     const connection = mongoose.connection;
 
-    connection.on('connected', () => {
-      // console.log('MongoDB connected successfully');
+    connection.on("connected", () => console.log("✅ MongoDB connected successfully"));
+    connection.on("error", (err) => {
+      console.error("❌ MongoDB connection error:", err);
+      process.exit(1);
     });
-
-    connection.on('error', (err) => {  // Fixed arrow function syntax
-      // console.log('MongoDB connection error. Please make sure MongoDB is running.');
-      // console.error(err);
-      // process.exit(1);  // Exit with error code
-    });
-
   } catch (error) {
-    console.log('Something went wrong!');
-    console.error(error);
-    process.exit(1); // Exit the process on error
+    console.error("❌ Something went wrong while connecting to MongoDB:", error);
+    process.exit(1);
   }
 }
