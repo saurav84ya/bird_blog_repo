@@ -276,10 +276,7 @@ const ProfilePage = () => {
             width={155} 
             height={155}
             className="rounded-full aspect-square"
-            style={{
-              width: '155px',
-              height: '135px'
-            }}
+          
           />  :<span className="text-4xl">👤</span>
           }
         </div>
@@ -338,7 +335,7 @@ const ProfilePage = () => {
               </div>
               
               <div className="mb-4">
-                <label className="block text-gray-700 mb-2" htmlFor="email">
+                {/* <label className="block text-gray-700 mb-2" htmlFor="email">
                   Email
                 </label>
                 <input
@@ -348,7 +345,7 @@ const ProfilePage = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   className="w-full px-3 py-2 border rounded"
-                />
+                /> */}
               </div>
               
               <div className="mb-4">

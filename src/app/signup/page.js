@@ -1,20 +1,23 @@
-import SignUpForm from '@/components/SignUpForm'
-import { getServerSession } from 'next-auth'
-import React from 'react'
-import { authOptions } from '../api/auth/[...nextauth]/route'
-import { redirect } from 'next/navigation'
+"use client";
 
-export default async function  page() {
+import SignUpForm from "@/components/SignUpForm";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
-  const session = await getServerSession(authOptions)
+export default function Page() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
 
-  // console.log("session",session)
+  useEffect(() => {
+    if (session) router.push("/");
+  }, [session, router]);
 
-  if(session) redirect ("/")
+  if (status === "loading") return <p>Loading...</p>;
 
   return (
-    <div className='h-[calc(100dvh-8rem)] flex w-full items-center justify-center' >
-      <SignUpForm/>
+    <div className="h-[calc(100dvh-8rem)] flex w-full items-center justify-center">
+      <SignUpForm />
     </div>
-  )
+  );
 }
