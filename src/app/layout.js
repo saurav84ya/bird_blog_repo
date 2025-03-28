@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 import AuthProvider from "./AuthProvider";
 
 import { Roboto } from "next/font/google";
+import LoaderGlobal from "@/components/LoaderGlobal";
 
 // Initialize the font
 const roboto = Roboto({
@@ -44,7 +45,9 @@ export default function RootLayout({ children }) {
       <body
        className={roboto.className}
       >
+        
        <AuthProvider>
+        <LoaderGlobal/>
        <Navbar/>
         {children}
         <Footer/>

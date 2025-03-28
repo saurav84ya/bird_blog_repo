@@ -1,10 +1,11 @@
 "use client";
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { IoMdCloseCircle } from "react-icons/io";
 import { usePathname } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
+import { useLoadingStore } from '@/store/loadingStore';
 
 export default function Navbar() {
     const { data: session, status } = useSession();
@@ -12,13 +13,25 @@ export default function Navbar() {
     const [dropDown, setDropDown] = useState(false);
     const pathname = usePathname();
 
-    // console.log("session",session)
+    const setLoading = useLoadingStore((state) => state.setLoading);
+    console.log("session",setLoading)
+
+    
+    function runLoader () {
+        setLoading(true);
+        return null;
+    }
+
+    useEffect(() => {
+        setLoading(false)
+    } , [pathname])
 
     return (
         <div className='container py-3 h-16 flex items-center mx-auto w-full lg:w-[1000px] justify-between'>
             {/* Logo */}
             <Link href={'/'}>
-                <h2 className="text-2xl font-bold">
+                
+                <h2 className="text-2xl font-bold"  onClick={runLoader} >
                     Light<span className='special-word'>Code</span>.
                 </h2>
             </Link>
@@ -26,23 +39,27 @@ export default function Navbar() {
             {/* Navigation Menu */}
             <ul className='flex items-center gap-6 relative'>
                 <li>
+                    <span onClick={runLoader} >
                     <Link 
                         href={'/blog'} 
                         className={`capitalize hover:special-word transition-all ${pathname === '/blog' ? 'special-word font-bold' : ''}`}
                     >
                         Blog
                     </Link>
+                    </span>
                 </li>
 
                 {isAuthenticated ? (
                     <>
                         <li>
+                        <span onClick={runLoader} >
                             <Link 
                                 href={'/create-blog'} 
                                 className={`capitalize hover:special-word transition-all ${pathname === '/create-blog' ? 'special-word font-bold' : ''}`}
                             >
                                 Create
                             </Link>
+                            </span>
                         </li>
 
                         {/* Profile Dropdown */}
@@ -90,20 +107,24 @@ export default function Navbar() {
                 ) : (
                     <>
                         <li>
+                        <span onClick={runLoader} >
                             <Link 
                                 href={'/login'} 
                                 className={`capitalize hover:special-word transition-all ${pathname === '/login' ? 'special-word font-bold' : ''}`}
                             >
                                 Log In
                             </Link>
+                            </span>
                         </li>
                         <li>
+                        <span onClick={runLoader} >
                             <Link 
                                 href={'/signup'} 
                                 className={`capitalize hover:special-word transition-all ${pathname === '/signup' ? 'special-word font-bold' : ''}`}
                             >
                                 Sign Up
                             </Link>
+                            </span>
                         </li>
                     </>
                 )}
