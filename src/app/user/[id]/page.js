@@ -24,7 +24,8 @@ export default async function UserDetailPage({ params }) {
   const { userBlogList } = await userBlogs.json();
 
 
-  const age = moment().diff(moment(userDetail?.age), "years");
+  const age = moment(userDetail?.age).format("YYYY-MM-DD"); // Adjust format as needed
+
 
   return (
     <div className="max-w-[1000px] mx-auto  p-6 h-[calc(100vdh-8rem)] rounded-lg mt-10">
