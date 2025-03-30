@@ -68,7 +68,7 @@ export async function GET(req) {
   try {
     const { searchParams } = new URL(req.url);
     const page = Number(searchParams.get("page")) || 1;
-    const limit =5;
+    const limit =7;
     const skip = (page - 1) * limit;
 
     const totalBlogs = await Blog.countDocuments();

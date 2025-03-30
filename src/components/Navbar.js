@@ -32,12 +32,22 @@ export default function Navbar() {
             <Link href={'/'}>
                 
                 <h2 className="text-2xl font-bold"  onClick={runLoader} >
-                    Light<span className='special-word'>Code</span>.
+                Feather<span className='special-word'>Verse</span>.
                 </h2>
             </Link>
 
             {/* Navigation Menu */}
             <ul className='flex items-center gap-6 relative'>
+            <li>
+                    <span onClick={runLoader} >
+                    <Link 
+                        href={'/about-us'} 
+                        className={`capitalize hover:special-word transition-all ${pathname === '/about-us' ? 'special-word font-bold' : ''}`}
+                    >
+                        AboutUs
+                    </Link>
+                    </span>
+                </li>
                 <li>
                     <span onClick={runLoader} >
                     <Link 
@@ -116,16 +126,7 @@ export default function Navbar() {
                             </Link>
                             </span>
                         </li>
-                        <li>
-                        <span onClick={runLoader} >
-                            <Link 
-                                href={'/signup'} 
-                                className={`capitalize hover:special-word transition-all ${pathname === '/signup' ? 'special-word font-bold' : ''}`}
-                            >
-                                Sign Up
-                            </Link>
-                            </span>
-                        </li>
+                       
                     </>
                 )}
             </ul>

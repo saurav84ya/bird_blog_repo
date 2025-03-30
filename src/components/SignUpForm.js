@@ -74,12 +74,17 @@ export default function SignUpForm() {
     setState({ ...state, [event.target.name]: event.target.value });
   };
 
+
+  const notAvlible = () => {
+    toast.success("Plz use Google for SignUp ");
+  }
+
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="bg-gray-800 text-white p-8 rounded-lg shadow-lg w-80 md:w-96">
         <h2 className="text-2xl font-bold text-center text-orange-400 mb-5">Sign up</h2>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <div  className="space-y-4">
           {/* Name Field */}
           <div>
             <label className="block text-sm mb-1">Name</label>
@@ -123,6 +128,7 @@ export default function SignUpForm() {
           <button
             type="submit"
             disabled={isLoading}
+            onClick={notAvlible}
             className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-md transition duration-200"
           >
             {isLoading ? "Loading..." : "Sign Up"}
@@ -130,7 +136,7 @@ export default function SignUpForm() {
 
           {/* GitHub Sign Up Button */}
           
-        </form>
+        </div>
        
 <div className="flex flex-col gap-4 mt-6">
   {/* GitHub Button */}
