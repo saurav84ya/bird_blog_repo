@@ -1,33 +1,32 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-const MONGO_URI = process.env.MONGODB_URL;
+const MONGODB_URL = process.env.MONGODB_URL;
 
-export async function connect() {
-  if (!MONGO_URI) {
-    console.error("❌ MongoDB connection string is missing!");
-    process.exit(1);
+if (!MONGODB_URL) {
+  throw new Error("Please define the MONGODB_URL in .env file");
+}
+
+let isConnected = false; // Track connection status
+
+export const connect = async () => {
+  if (isConnected) {
+    console.log("✅ Using existing MongoDB connection");
+    return;
   }
 
   try {
-    if (mongoose.connection.readyState >= 1) {
-      console.log("⚡ Using existing MongoDB connection");
-      return;
-    }
-
-    await mongoose.connect(MONGO_URI, {
-      serverSelectionTimeoutMS: 30000, // ⬅ Increase timeout (default is 10000ms)
-      connectTimeoutMS: 30000, // ⬅ Connection timeout
+    const db = await mongoose.connect(MONGODB_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 15000, // Wait 15 seconds before failing
+      socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
+      bufferCommands: false, // Disable mongoose buffering
     });
 
-    const connection = mongoose.connection;
-
-    connection.on("connected", () => console.log("✅ MongoDB connected successfully"));
-    connection.on("error", (err) => {
-      console.error("❌ MongoDB connection error:", err);
-      process.exit(1);
-    });
+    isConnected = db.connections[0].readyState;
+    console.log("🚀 MongoDB Connected Successfully!");
   } catch (error) {
-    console.error("❌ Something went wrong while connecting to MongoDB:", error);
-    process.exit(1);
+    console.error("❌ MongoDB Connection Error:", error);
+    throw new Error("MongoDB Connection Failed!");
   }
-}
+};

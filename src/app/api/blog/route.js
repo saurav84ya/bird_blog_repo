@@ -8,23 +8,8 @@ import User from "@/models/User";
 
 export async function POST(req) {
   await connect();
-
-  // const accessToken = req.headers.get("authorization");
-  // const token = accessToken.split(" ")[1];
-
-  // const decodedToken = verifyJwtToken(token);
-
-  // if (!accessToken || !decodedToken) {
-  //   return new Response(
-  //     JSON.stringify({ message: "unauthorized (wrong or expired token" , success : false  }),
-  //     { status: 403 }
-  //   );
-  // }
-
   try {
     const body = await req.json();
-
-    // console.log("body",body.authorEmail)
 
     const autherEMAIL = body?.authorEmail
 
@@ -52,24 +37,55 @@ export async function POST(req) {
   }
 }
 
+
+
+// export async function GET(req) {
+//   await connect();
+
+//   try {
+//     const blogs = await Blog.find({})
+//       .populate({
+//         path: "authorId",
+//         select: "-password",
+//       })    
+//       .sort({ createdAt: -1 });
+
+//       return NextResponse.json({blogs , message : "fetched succesfully" , success : true });
+//   } catch (error) {
+//     return NextResponse.json(
+//       { message: "GET error" },
+//       {
+//         status: 500,
+//       }
+//     );
+//   }
+// }
+
+
 export async function GET(req) {
   await connect();
 
   try {
-    const blogs = await Blog.find({})
-      .populate({
-        path: "authorId",
-        select: "-password",
-      })    
-      .sort({ createdAt: -1 });
+    const { searchParams } = new URL(req.url);
+    const page = Number(searchParams.get("page")) || 1;
+    const limit =5;
+    const skip = (page - 1) * limit;
 
-      return NextResponse.json({blogs , message : "fetched succesfully" , success : true });
+    const totalBlogs = await Blog.countDocuments();
+    const blogs = await Blog.find({})
+      .populate({ path: "authorId", select: "-password" })
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    return NextResponse.json({
+      blogs,
+      totalPages: Math.ceil(totalBlogs / limit),
+      currentPage: page,
+      message: "Fetched successfully",
+      success: true,
+    });
   } catch (error) {
-    return NextResponse.json(
-      { message: "GET error" },
-      {
-        status: 500,
-      }
-    );
+    return NextResponse.json({ message: "GET error" }, { status: 500 });
   }
 }

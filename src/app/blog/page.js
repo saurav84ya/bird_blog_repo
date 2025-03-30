@@ -1,43 +1,37 @@
 import React from "react";
 import FirstBlog from "@/components/FirstBlog";
 import OtherBlogs from "@/components/OtherBlogs";
-import demoImage from '../../../public/img/demoImage.png'
-
-async function fetchBlogs() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_HOSTED_URL}/api/blog`, {
-    cache: "no-store",
-  });
-
-  // console.log("res",res)
-
-
+import demoImage from "../../../public/img/demoImage.png";
+import Pagination from "@/components/Pagination";
+async function fetchBlogs(page = 1) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_HOSTED_URL}/api/blog?page=${page}`,
+    { cache: "no-store" }
+  );
   return res.json();
 }
 
-const Blog = async () => {
-  const {blogs} = await fetchBlogs();
+const Blog = async ({ params, searchParams }) => {
 
-  // console.log("blogs",blogs)
+  const xyz = await searchParams
+  const page =   Number(xyz?.page) || 1;
+  if (page < 1) return notFound(); 
+
+  const { blogs, totalPages } = await fetchBlogs(page);
 
   const firstBlog = blogs && blogs[0];
-  const otherBlogs = blogs?.length > 0 && blogs.slice(1)
+  const otherBlogs = blogs?.length > 0 ? blogs.slice(1) : [];
 
-  // console.log("firstBlog",firstBlog)
   return (
-    <div className="max-w-[1000px] mx-auto" >
+    <div className="max-w-[1000px] mx-auto px-3 md:px-5  ">
       {blogs?.length > 0 ? (
         <>
-        <div className="container  ">
-          <h2 className="text-center my-10">
-            <span className="text-primaryColor"><span className="special-word" >T</span>rending</span>{" "}
-            <span className="special-word" >B</span>log
-          </h2>
-          <FirstBlog firstBlog={firstBlog} demoImage={demoImage}  />
+          <FirstBlog firstBlog={firstBlog} demoImage={demoImage} />
           <OtherBlogs otherBlogs={otherBlogs} demoImage={demoImage} />
-        </div>
+          <Pagination currentPage={page} totalPages={totalPages} />
         </>
       ) : (
-        <h3>No Blogs...</h3>
+        <p className="text-center">No blogs found.</p>
       )}
     </div>
   );

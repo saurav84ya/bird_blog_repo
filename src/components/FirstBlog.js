@@ -23,7 +23,7 @@ const FirstBlog = ({ firstBlog ,demoImage}) => {
               width={0}
               height={0}
               sizes="100vw"
-              className="w-full h-full rounded-lg"
+              className="w-full h-full rouded-lg"
             />
           </div>
 

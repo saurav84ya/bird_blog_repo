@@ -14,7 +14,7 @@ export default function Navbar() {
     const pathname = usePathname();
 
     const setLoading = useLoadingStore((state) => state.setLoading);
-    console.log("session",setLoading)
+    // console.log("session",setLoading)
 
     
     function runLoader () {
