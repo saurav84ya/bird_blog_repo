@@ -40,7 +40,7 @@ export function generateMetadata() {
       type: "website",
       images: [
         {
-          url: "https://res.cloudinary.com/drrwidoo4/image/upload/v1743219923/qu2fkcs6sdzxffxkbesf.png",
+          url: "/favicon.png",
           width: 1200,
           height: 630,
           alt: "FeatherVerse - Bird Blogging Platform",
@@ -53,7 +53,7 @@ export function generateMetadata() {
       description:
         "FeatherVerse is a social blogging platform for bird lovers. Explore, create, and engage with bird-related blogs.",
       images: [
-        "https://res.cloudinary.com/drrwidoo4/image/upload/v1743219923/qu2fkcs6sdzxffxkbesf.png",
+        "/favicon.png",
       ],
     },
   };
