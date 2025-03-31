@@ -7,7 +7,7 @@ import Image from 'next/image';
 import moment from 'moment';
 import Link from 'next/link';
 import { deletePhoto } from '@/actions/uploadActions';
-import DeletAllBlogs from '@/components/DeletAllBlogs';
+import DeletAllBlogs from '@/components/Delete';
 
 const ProfilePage = () => {
   const { data: session, status } = useSession();
@@ -429,8 +429,10 @@ const ProfilePage = () => {
 
       {/* User Blogs Section */}
       <div className="mb-8">
-       <DeletAllBlogs deleteShow={deleteShow} deletAllBlogs={deletAllBlogs} setDeletShow={setDeletShow}  />
-        
+      <div className="flex justify-between items-center ">
+          <h2 className="text-xl font-bold">Your Recent Blogs</h2>
+          
+        </div>
         {/* Blog List */}
         <div className="space-y-4">
 
@@ -482,15 +484,7 @@ const ProfilePage = () => {
       </div>
 
       {/* Danger Zone */}
-      <div className="border-t border-red-200 pt-6">
-        <h2 className="text-xl font-bold text-red-600 mb-4">Danger Zone</h2>
-        <div className="bg-red-50 p-4 rounded-lg">
-          <p className="text-red-700 mb-4">These actions are irreversible. Please proceed with caution.</p>
-          <button className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition">
-            Delete Your Account
-          </button>
-        </div>
-      </div>
+     <DeletAllBlogs session={session} />
     </div>
   );
 };

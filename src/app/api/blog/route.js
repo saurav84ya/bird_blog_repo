@@ -89,3 +89,42 @@ export async function GET(req) {
     return NextResponse.json({ message: "GET error" }, { status: 500 });
   }
 }
+
+
+export async function DELETE(req) {
+  try {
+    const accessToken = req.headers.get("authorization");
+    
+    if (!accessToken) {
+      return NextResponse.json(
+        { message: "Authorization header missing" },
+        { status: 401 }
+      );
+    }
+
+    // Extracting userId (Assuming token format is "Bearer <userId>")
+    const userId = accessToken.split(" ")[1];
+    if (!userId) {
+      return NextResponse.json(
+        { message: "Invalid token format" },
+        { status: 400 }
+      );
+    }
+
+    // Delete User and All Their Blogs
+    await Blog.deleteMany({ authorId: userId }); // ✅ Fixing deletion query
+
+    return NextResponse.json({
+      message: "All blogs deleted successfully",
+      success: true
+    });
+
+  } catch (error) {
+    console.error("Error deleting user:", error);
+
+    return NextResponse.json(
+      { message: "Server error" },
+      { status: 500 }
+    );
+  }
+}
