@@ -59,7 +59,7 @@ export default async function UserDetailPage({ params }) {
           <span className="font-semibold">📍 Location:</span> {userDetail.location}
         </p>
         <p>
-          <span className="font-semibold">🎂 Age:</span> {age} Years
+           <span className="font-semibold">🎂 Dob :</span> {age} 
         </p>
         <p>
           <span className="font-semibold">📝 About:</span> {userDetail.about}
